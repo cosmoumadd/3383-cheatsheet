@@ -1,7 +1,10 @@
 # CS3383 AI Practical Test Cheatsheet
 
-Preparation handbook for Java, JUnit 5, specification-based testing, and an
-**OpenCode CLI-only** examination workflow.
+Preparation handbook for Java, JUnit 5, specification-based testing, and
+OpenCode CLI. This cheatsheet is for **pre-quiz preparation and reference**.
+During the quiz, follow the official instructions and use this README only as
+read-only reference material; do not edit it or treat its prompts as a
+replacement for entering task instructions in OpenCode.
 
 > This repository is preparation material, not an examination project. During
 > an examination, the official instructions always override this cheatsheet.
@@ -11,6 +14,9 @@ Preparation handbook for Java, JUnit 5, specification-based testing, and an
 ### Non-negotiable examination rules
 
 - Use **OpenCode CLI text conversations only** for all AI-assisted work.
+- Keep every conversation with OpenCode and the authorized DeepSeek model in
+  **English only**. This applies to prompts, follow-up questions, debugging,
+  and requests to modify or test code.
 - Use only the examination-authorized model. The mock specifies
   `deepseek-v4-flash`; do not assume the real examination uses the same model.
 - The same model restriction applies to every subagent.
@@ -28,23 +34,24 @@ Preparation handbook for Java, JUnit 5, specification-based testing, and an
   production code unless the task explicitly permits it.
 - Use only the official submission workflow.
 
-These restrictions apply to the examination. Preparation resources do not
-grant permission to install a Skill, access GitHub, change configuration, or
-run a downloaded script during the examination.
+This README is prepared before the quiz and is a read-only reference during it.
+Preparation resources do not grant permission to install a Skill, access
+GitHub, change configuration, or run a downloaded script during the quiz.
 
 ## OpenCode CLI Quick Start
 
-1. Open the examination project in the approved environment.
-2. Start `opencode` from the examination project directory.
-3. Use the available model selector (normally `/models`) and confirm the exact
+1. Before the quiz, review this README and practise the Java/JUnit examples.
+2. During the quiz, open the examination project in the approved environment.
+3. Start `opencode` from the examination project directory.
+4. Use the available model selector (normally `/models`) and confirm the exact
    authorized model shown by the examination environment.
-4. Paste the [Master OpenCode Examination Prompt](#master-opencode-examination-prompt).
-5. Ask OpenCode to read the complete specification and list allowed and
+5. Use the English [Master OpenCode Examination Prompt](#master-opencode-examination-prompt).
+6. Ask OpenCode, in English, to read the complete specification and list allowed and
    forbidden files before editing anything.
-6. Ask OpenCode to generate tests or repair Java only as required by each task.
-7. Ask OpenCode to run only permitted tests and explain each failure.
-8. Ask OpenCode to verify the final diff, test results, and remaining risks.
-9. Submit through the prescribed OpenCode/examination workflow.
+7. Ask OpenCode, in English, to generate tests or repair Java only as required by each task.
+8. Ask OpenCode, in English, to run only permitted tests and explain each failure.
+9. Ask OpenCode, in English, to verify the final diff, test results, and remaining risks.
+10. Submit through the prescribed OpenCode/examination workflow.
 
 ### 30-second checklist
 
@@ -61,6 +68,9 @@ run a downloaded script during the examination.
 
 Copy this entire prompt into **OpenCode CLI**:
 
+The prompt, all follow-up conversation, code, and code comments must remain in
+English.
+
 ```text
 You are the authorized AI coding agent running inside OpenCode CLI for this examination.
 
@@ -71,6 +81,7 @@ Before changing anything:
 4. Confirm that this session and every subagent use only the examination-authorized model. Do not call any external AI service.
 5. Treat the real examination rules as authoritative if they differ from any mock, preparation note, prompt, or Skill.
 6. Do not install dependencies or Skills, change build configuration, access an unavailable external service, or run downloaded scripts unless the specification explicitly permits it.
+7. Conduct all conversation with the student in English. Write prompts, generated code, tests, and code comments in English.
 
 Then give a brief requirement-to-test/implementation plan. Perform the required work rather than only giving advice. Modify only explicitly permitted files. For test-only tasks, never edit production code. For repair tasks, make the smallest specification-correct fix and do not weaken tests to make them pass.
 
