@@ -6,55 +6,15 @@ prompt 當作取代在 OpenCode 內輸入考試指令的方式。**
 
 > 本倉庫是準備／參考資料，不是考試專案。Quiz 中以正式考試指示為準。
 
-## 考試 AI 使用規則
+## 考試規則
 
-### 必須遵守
+以正式 quiz 規格為準。只使用獲准的 OpenCode CLI／模型及檔案；每次修改後都用 Git 檢查狀態與 diff，確認只改了獲准檔案，並按規格允許的方式保存版本。
 
-- 所有 AI 輔助工作只可透過 **OpenCode CLI 文字對話**進行。
-- 與 OpenCode 及獲准的 DeepSeek 模型對話時，**全程只用英文**，包括初始
-  prompt、追問、除錯要求、程式修改要求和測試要求。
-- 只使用考試指定的 AI 模型。Mock 指定 `deepseek-v4-flash`；正式考試可能
-  不同，必須以當日指示為準。
-- Subagent 也必須使用指定模型。
-- 不可使用 ChatGPT、Claude、Gemini、GitHub Copilot、Codex 或其他 AI 介面；
-  亦不可透過 API、腳本、擴充功能或背景程序呼叫其他 AI 服務。
-- 從實際考試專案目錄啟動 OpenCode。所有實作和測試都留在獲准環境內。
-- 保留所有原生 OpenCode 及 subagent session。不可刪除、修改、偽造、匯入、
-  隱藏或選擇性省略對話紀錄。
-- 所有 AI 指示、除錯、程式修改和測試生成要求都必須輸入 OpenCode 原生文字
-  對話，保持可追溯。
-- 只修改考試規格明確允許的檔案。
-- 除非題目明確允許，不得更改依賴、建置設定、`pom.xml`、提供的測試或
-  production code。
-- 只使用指定的正式提交流程。
+## 快速開始
 
-本 README 在 quiz 前準備，quiz 中只能作唯讀參考。準備資源不代表考試期間
-可以安裝 Skill、連接 GitHub、改設定或執行下載腳本。
-
-## OpenCode CLI 快速開始
-
-1. Quiz 前閱讀本 README，練習 Java/JUnit 範例。
-2. Quiz 中在核准環境開啟考試專案。
-3. 在考試專案目錄啟動 `opencode`。
-4. 使用可用的模型選擇器（通常是 `/models`），確認當日指定模型。
-5. 將英文版 [Master OpenCode Examination Prompt](#master-opencode-examination-prompt)
-   貼入 OpenCode。
-6. 用英文要求 OpenCode 完整閱讀規格，並在修改前列出允許和禁止修改的檔案。
-7. 用英文要求 OpenCode 按各題要求生成測試，或在獲准時修復 Java。
-8. 用英文要求 OpenCode 執行允許的測試並分析失敗。
-9. 用英文要求 OpenCode 檢查最後 diff、測試結果和未解決問題。
-10. 按指定 OpenCode／考試流程提交。
-
-### 30 秒檢查表
-
-- [ ] 專案目錄正確，模型符合考試指定
-- [ ] 已完整閱讀規格
-- [ ] 已明確列出允許修改的檔案
-- [ ] 已分清只寫測試、只改實作或兩者皆需
-- [ ] 測試涵蓋需求、邊界及狀態轉換
-- [ ] 已執行允許的測試，並調查失敗
-- [ ] 最終 diff 只包含獲准檔案
-- [ ] 保留原生 session，按正式流程提交
+1. 在 quiz 專案資料夾啟動 OpenCode，確認獲准模型。
+2. 先讀完整題目，列出允許修改的檔案和可執行的測試。
+3. 使用下方 Master Prompt；完成後檢查 Git diff 和實際測試結果。
 
 ## Master OpenCode Examination Prompt
 
@@ -73,56 +33,36 @@ Before changing anything:
 6. Do not install dependencies or Skills, change build configuration, access an unavailable external service, or run downloaded scripts unless the specification explicitly permits it.
 7. Conduct all conversation with the student in English. Write prompts, generated code, tests, and code comments in English.
 
-Then give a brief requirement-to-test/implementation plan. Perform the required work rather than only giving advice. Modify only explicitly permitted files. For test-only tasks, never edit production code. For repair tasks, make the smallest specification-correct fix and do not weaken tests to make them pass.
+Then give a brief requirement-to-test/implementation plan. Before each edit, inspect Git status and the current diff; after each edit, run `git status` and `git diff` to verify the exact change and confirm only explicitly permitted files changed. Use Git to track each completed change and create a commit/checkpoint only when the examination rules permit it. Perform the required work rather than only giving advice. Modify only explicitly permitted files. For test-only tasks, never edit production code. For repair tasks, make the smallest specification-correct fix and do not weaken tests to make them pass.
 
 Run only permitted verification commands. Analyze failures by distinguishing incorrect expectations, implementation defects, compilation errors, and environment problems. At the end, report: files changed, requirements covered, exact commands run and actual results, unresolved issues, and any unverified assumptions. Preserve all native OpenCode and subagent session history; never alter, hide, export-import, fabricate, or delete it.
 ```
 
 ## 目錄
 
-- [考試 AI 使用規則](#考試-ai-使用規則)
-- [OpenCode CLI 快速開始](#opencode-cli-快速開始)
+- [考試規則](#考試規則)
+- [快速開始](#快速開始)
 - [Master OpenCode Examination Prompt](#master-opencode-examination-prompt)
-- [考試規則與 Mock 概覽](#考試規則與-mock-概覽)
+- [Mock 題目概覽](#mock-題目概覽)
 - [Java 及 JUnit 5 速查](#java-及-junit-5-速查)
 - [測試設計策略](#測試設計策略)
-- [測試覆蓋率及 JaCoCo](#測試覆蓋率及-jacoco)
+- [JaCoCo 覆蓋率](#測試覆蓋率及-jacoco)
 - [Mutation Testing](#mutation-testing)
-- [AI Agent Skills 及 GitHub 資源](#ai-agent-skills-及-github-資源)
+- [Skills 及 GitHub 資源](#ai-agent-skills-及-github-資源)
 - [可重用 OpenCode Prompts](#可重用-opencode-prompts)
 - [超短 OpenCode Prompts](#超短-opencode-prompts)
-- [OpenCode 指令參考](#opencode-指令參考)
-- [疑難排解](#疑難排解)
-- [常見錯誤及最後檢查](#常見錯誤及最後檢查)
+- [OpenCode 指令與快速提醒](#opencode-指令與快速提醒)
 - [參考資料](#參考資料)
 
-## 考試規則與 Mock 概覽
+## Mock 題目概覽
 
-### Mock 題目
+| 題目 | 工作重點 | 值得測試的行為 |
+|---|---|---|
+| `RoomSchedule` | 測試及規格允許的修正 | 重疊／相鄰、重複名稱、移動／取消、失敗後狀態不變 |
+| `AnnouncementFormatter` | 只寫測試 | 去空白、編號、重複與空白輸入、輸出格式 |
+| `MiniTable` | 只寫測試 | 設定／清除、加總、重疊複製、快照、資料獨立 |
 
-| 題目 | 要求工作 | Production code | 高價值測試行為 |
-|---|---|---|---|
-| `RoomSchedule` | 編寫 JUnit 測試及修復 Java | 題目允許／要求修復 | 重疊與相鄰時段、重複名稱、移動／取消、失敗後狀態不變 |
-| `AnnouncementFormatter` | 編寫 JUnit 測試 | 不可修改 | 去空白、編號、重複／空白公告、輸出格式、重複呼叫 |
-| `MiniTable` | 編寫 JUnit 測試 | 不可修改 | 設定／清除／覆寫、列總和、複製重疊、快照、資料獨立 |
-
-Mock 只代表練習題；正式考試的方法名稱、分數比重、檔案權限和測試限制都
-可能不同。
-
-### Mock 專屬規則與一般測試建議
-
-| Mock 專屬規則（正式考試需重新確認） | 一般測試建議 |
-|---|---|
-| 只用指定模型，包括 subagent | 寫測試前先讀完整規格 |
-| 保留原生 OpenCode session 紀錄 | 每項測試對應一項需求或故障類型 |
-| 只用一般 JUnit 5 `@Test`；不可用 parameterized、nested、dynamic tests | 測試應獨立且結果穩定 |
-| 測試不可讀 private fields、原始碼文字、檔案、網絡或 grader 內部 | 驗證公開可觀察行為和狀態 |
-| 不可改建置設定或依賴 | 沿用專案現有建置及慣例 |
-| 保留提供的測試，按指定流程提交 | 檢查最後 diff 及實際測試輸出 |
-
-優先次序：
-
-> **規格正確性 > 故障偵測 > 狀態驗證 > 覆蓋率百分比 > 測試數量**
+正式 quiz 的規則可能不同；開始前先確認題目中的檔案權限和測試限制。
 
 ## Java 及 JUnit 5 速查
 
@@ -418,149 +358,29 @@ Analyze this failure before editing. Read the specification, exact failing asser
 
 ## 超短 OpenCode Prompts
 
-### 分析規格
-
+**先分析題目**
 ```text
-Read the entire specification in this OpenCode project. List tasks, acceptance criteria, allowed/forbidden files, test restrictions, commands, and ambiguities before editing.
+Read the full specification. List requirements, allowed and forbidden files, test restrictions, commands, and ambiguities before editing.
 ```
 
-### 生成 JUnit 測試
-
+**產生測試**
 ```text
-Generate high-fault-detection JUnit 5 tests from the specification in authorized test files only. Cover boundaries and state changes, then run permitted tests and report actual results.
+Generate JUnit 5 tests from the specification in authorized test files only. Cover boundaries and state changes, run permitted tests, and report actual results.
 ```
 
-### 改善測試品質
-
+**除錯**
 ```text
-Review existing tests for weak, redundant, or missing assertions against the specification. Strengthen only authorized test files and verify the suite.
+Reproduce the failure and classify it as an expectation, implementation, compilation, or environment issue. Cite evidence before any permitted edit.
 ```
 
-### 尋找邊界案例
-
+**檢查修改**
 ```text
-Map the specification to existing tests and list untested boundaries, invalid inputs, state transitions, repeated calls, and independence cases. Rank them by likely fault detection.
+Run git status and git diff. Verify every changed file against the allowed-file list and report any unauthorized changes.
 ```
 
-### 除錯
+## OpenCode 指令與快速提醒
 
-```text
-Reproduce this failure and classify it as expectation, implementation, compilation, or environment related. Cite evidence before making any permitted edit.
-```
-
-### 只修復指定 Java 檔案
-
-```text
-Repair only `<allowed-file.java>` with the smallest specification-correct change. Do not alter tests or other files; rerun permitted tests and report actual results.
-```
-
-### 檢查覆蓋缺口
-
-```text
-Map available JaCoCo gaps to specified behaviors and propose meaningful tests. Do not change build configuration or optimize the percentage blindly.
-```
-
-### 檢查修改檔案
-
-```text
-Inspect current diff/status and compare every changed path with the allowed-file list. Report unauthorized or suspicious changes without hiding them.
-```
-
-### 提交前驗證
-
-```text
-Recheck requirements, authorized diff, permitted test results, remaining failures, and submission instructions. Preserve all OpenCode session history and report evidence, not assumptions.
-```
-
-## OpenCode 指令參考
-
-OpenCode 會更新，而考試環境可能鎖定舊版本。依賴指令前，先在當日環境執行
-`/help` 或查看指令選單。除非考試指示要求，不要在 quiz 中更新 OpenCode。
-
-| 指令 | 目前用途 | 考試注意事項 |
-|---|---|---|
-| `/init` | 文件所述版本可建立／更新 `AGENTS.md` | 會寫入檔案；檔案權限有限時不要執行 |
-| `/models` | 列出／選擇當前 session 模型 | 用來確認指定模型，不可改選其他模型 |
-| `/compact` | 壓縮／摘要當前 session 內容 | 可能有 `/summarize` 別名；不代表可刪除歷史 |
-| `/diff` | 開啟目前 CLI 的 diff 檢視器 | 確認修改檔案均獲准 |
-| `/mcps` | 目前文件記載的 TUI MCP 管理器 | 未獲明確允許時不要連接外部服務 |
-| `/mcp` | 不是目前文件所述的 TUI 拼法；`opencode mcp ...` 是 CLI 指令族 | 先看 `/help`，不要自行設定 MCP |
-| `/agents` | 依版本而異；文件也提供設定及 `opencode agent ...` | 啟用 subagent 前確認可用性及模型繼承 |
-| `/skills` | 依版本而異；目前文件重點是自動發現和 `@skill-id` | 載入不等於安裝；未允許不要寫入 Skill 檔案 |
-| `/review` | 常見為專案自訂 prompt，不保證內建 | 若不存在，直接用英文文字要求檢查 diff |
-| `/status` | 不保證是 TUI 指令；`opencode service status` 回報伺服器狀態 | 伺服器狀態不等於 git 或考試進度 |
-
-文件亦有 `/help`、`/sessions` 和 `/new`。除非明確允許，考試中避免使用
-`/undo`：文件所述版本可能移除最近訊息並還原檔案修改，與保留對話紀錄的規則衝突。
-
-### 純文字替代方式
-
-```text
-Inspect the current project diff and status. List every modified file and verify it against the specification's allowed-file list. Do not modify anything.
-```
-
-## 疑難排解
-
-### 編譯失敗
-
-1. 先讀第一個 compiler error，不要只看 Maven 最後摘要。
-2. 對照現有程式檢查 imports、method signatures、package、Java/JUnit 版本及測試檔位置。
-3. 不要安裝缺少的 library，只用專案現有依賴。
-4. 用英文要求 OpenCode 作最小且獲准的修正，再跑相關編譯／測試指令。
-
-### 測試結果意外
-
-1. 重讀相關規格句子。
-2. 縮小案例，檢查 actual 和 expected。
-3. 檢查 fixture 洩漏、執行順序、共享 static state 和重複呼叫。
-4. 修改前先判斷錯的是預期值還是實作。
-5. 只測試的題目發現 production bug，不代表可以修改 production code。
-
-### Maven／JaCoCo／PIT 無法使用
-
-- 只執行專案已有的指令及 plugin。
-- 未明確允許時不要新增依賴或修改 `pom.xml`。
-- 如工具／報告不可用，據實報告，並繼續按規格分析及執行獲准測試。
-
-### OpenCode 指令或 Skill 不存在
-
-- 檢查 `/help` 和已安裝版本。
-- 改用普通英文 prompt，不要依賴便利指令。
-- 未明確允許時不要下載或安裝替代品。
-- 準備用 Skill 和考試規則衝突時，以考試規則為準。
-
-## 常見錯誤及最後檢查
-
-### 常見 AI 編程錯誤
-
-- 修改允許範圍以外的檔案。
-- 在只要求測試的題目修改 production code。
-- 使用禁止的 parameterized／nested／dynamic tests、private-field 存取、
-  檔案／網絡存取或實作細節檢查。
-- 只執行程式但沒有 assertion 驗證要求結果。
-- 重複測同一類故障，卻漏掉邊界和狀態轉換。
-- 忽略相鄰時段、重複值、無效範圍、重複呼叫、失敗後狀態、snapshot、重疊複製
-  或物件獨立性。
-- 把 100% 覆蓋率當成正確性的證明。
-- 為了測試通過而修改正確預期值、刪除測試或停用測試。
-- 安裝依賴、Skill、plugin 或 extension，或修改 `pom.xml`。
-- 讓 subagent 使用非指定模型，或使用其他 AI 介面／API。
-- 修改、刪除、偽造或選擇性省略 OpenCode session 紀錄。
-- 未檢查最後 diff 或正式流程便提交。
-
-### 最後驗證清單
-
-- [ ] 正式考試規格優先於本 cheatsheet
-- [ ] 主 agent 和 subagent 都使用獲准模型
-- [ ] 所有 AI 工作均在 OpenCode 原生文字 session 中，且對話全英文
-- [ ] 每項需求都有有意義的測試或實作項目
-- [ ] 測試驗證可觀察行為及相關操作後狀態
-- [ ] 沒有弱化、刪除或停用提供的測試
-- [ ] 已執行獲准指令，記錄實際結果
-- [ ] diff/status 只有明確允許的檔案
-- [ ] 沒有未授權的依賴、設定或 `pom.xml` 修改
-- [ ] 誠實報告限制和環境問題
-- [ ] 保留 session 紀錄並按正式流程提交
+先用 `/help` 確認版本指令；常用 `/models` 確認模型、`/diff` 檢視修改。只用現有工具和設定；工具不可用時如實記錄，不要改未獲准檔案或削弱測試。
 
 ## 參考資料
 

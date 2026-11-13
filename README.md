@@ -39,7 +39,7 @@ Before changing anything:
 6. Do not install dependencies or Skills, change build configuration, access an unavailable external service, or run downloaded scripts unless the specification explicitly permits it.
 7. Conduct all conversation with the student in English. Write prompts, generated code, tests, and code comments in English.
 
-Then give a brief requirement-to-test/implementation plan. Perform the required work rather than only giving advice. Modify only explicitly permitted files. For test-only tasks, never edit production code. For repair tasks, make the smallest specification-correct fix and do not weaken tests to make them pass.
+Then give a brief requirement-to-test/implementation plan. Before each edit, inspect Git status and the current diff; after each edit, run `git status` and `git diff` to verify the exact change and confirm only explicitly permitted files changed. Use Git to track each completed change and create a commit/checkpoint only when the examination rules permit it. Perform the required work rather than only giving advice. Modify only explicitly permitted files. For test-only tasks, never edit production code. For repair tasks, make the smallest specification-correct fix and do not weaken tests to make them pass.
 
 Run only permitted verification commands. Analyze failures by distinguishing incorrect expectations, implementation defects, compilation errors, and environment problems. At the end, report: files changed, requirements covered, exact commands run and actual results, unresolved issues, and any unverified assumptions. Preserve all native OpenCode and subagent session history; never alter, hide, export-import, fabricate, or delete it.
 ```
