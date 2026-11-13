@@ -9,60 +9,16 @@ replacement for entering task instructions in OpenCode.
 > This repository is preparation material, not an examination project. During
 > an examination, the official instructions always override this cheatsheet.
 
-## Examination AI Usage Rules
+## Examination Rules
 
-### Non-negotiable examination rules
+Follow the official quiz specification first. Use only the authorized OpenCode CLI/model and permitted project files; keep work in its native English text conversation and submit through the official workflow.
 
-- Use **OpenCode CLI text conversations only** for all AI-assisted work.
-- Keep every conversation with OpenCode and the authorized DeepSeek model in
-  **English only**. This applies to prompts, follow-up questions, debugging,
-  and requests to modify or test code.
-- Use only the examination-authorized model. The mock specifies
-  `deepseek-v4-flash`; do not assume the real examination uses the same model.
-- The same model restriction applies to every subagent.
-- Do not use ChatGPT, Claude, Gemini, GitHub Copilot, Codex, another AI client,
-  or an external AI API, script, extension, or background process.
-- Start OpenCode from the actual examination project directory. Keep
-  implementation and testing inside the authorized environment.
-- Preserve every native OpenCode session and subagent session. Never delete,
-  edit, fabricate, import, hide, or selectively omit conversation history.
-- Put every instruction, debugging request, code-change request, and
-  test-generation request in the native OpenCode text conversation so the work
-  remains traceable.
-- Modify only files explicitly permitted by the examination specification.
-- Do not change dependencies, build settings, `pom.xml`, supplied tests, or
-  production code unless the task explicitly permits it.
-- Use only the official submission workflow.
+## Quick Start
 
-This README is prepared before the quiz and is a read-only reference during it.
-Preparation resources do not grant permission to install a Skill, access
-GitHub, change configuration, or run a downloaded script during the quiz.
-
-## OpenCode CLI Quick Start
-
-1. Before the quiz, review this README and practise the Java/JUnit examples.
-2. During the quiz, open the examination project in the approved environment.
-3. Start `opencode` from the examination project directory.
-4. Use the available model selector (normally `/models`) and confirm the exact
-   authorized model shown by the examination environment.
-5. Use the English [Master OpenCode Examination Prompt](#master-opencode-examination-prompt).
-6. Ask OpenCode, in English, to read the complete specification and list allowed and
-   forbidden files before editing anything.
-7. Ask OpenCode, in English, to generate tests or repair Java only as required by each task.
-8. Ask OpenCode, in English, to run only permitted tests and explain each failure.
-9. Ask OpenCode, in English, to verify the final diff, test results, and remaining risks.
-10. Submit through the prescribed OpenCode/examination workflow.
-
-### 30-second checklist
-
-- [ ] Correct project directory and authorized model
-- [ ] Specification read completely
-- [ ] Allowed files listed explicitly
-- [ ] Test-only versus repair task identified
-- [ ] Tests target requirements, boundaries, and state transitions
-- [ ] Permitted tests run; failures investigated, not hidden
-- [ ] Final diff contains only authorized files
-- [ ] Native sessions preserved; official submission completed
+1. Open the quiz project and start OpenCode there.
+2. Confirm the authorized model, then use the [Master Prompt](#master-opencode-examination-prompt).
+3. Read the task before editing; verify allowed files and permitted test commands.
+4. Review the diff and actual test results before submission.
 
 ## Master OpenCode Examination Prompt
 
@@ -90,10 +46,10 @@ Run only permitted verification commands. Analyze failures by distinguishing inc
 
 ## Table of Contents
 
-- [Examination AI Usage Rules](#examination-ai-usage-rules)
-- [OpenCode CLI Quick Start](#opencode-cli-quick-start)
+- [Examination Rules](#examination-rules)
+- [Quick Start](#quick-start)
 - [Master OpenCode Examination Prompt](#master-opencode-examination-prompt)
-- [Examination Rules and Mock Overview](#examination-rules-and-mock-overview)
+- [Mock Task Overview](#mock-task-overview)
 - [Java and JUnit 5 Cheatsheet](#java-and-junit-5-cheatsheet)
 - [Test Design Strategies](#test-design-strategies)
 - [Test Coverage and JaCoCo](#test-coverage-and-jacoco)
@@ -101,38 +57,19 @@ Run only permitted verification commands. Analyze failures by distinguishing inc
 - [AI Agent Skills and GitHub Resources](#ai-agent-skills-and-github-resources)
 - [Reusable OpenCode Prompts](#reusable-opencode-prompts)
 - [Ultra-Short OpenCode Prompts](#ultra-short-opencode-prompts)
-- [OpenCode Command Reference](#opencode-command-reference)
-- [Troubleshooting](#troubleshooting)
-- [Common Mistakes and Final Checklist](#common-mistakes-and-final-checklist)
+- [OpenCode Commands](#opencode-commands)
+- [Quick Reminders](#quick-reminders)
 - [References](#references)
+## Mock Task Overview
 
-## Examination Rules and Mock Overview
+| Task | Main focus | Important cases |
+|---|---|---|
+| `RoomSchedule` | Tests and permitted repair | overlap/adjacency, duplicates, move/cancel, failure preserves state |
+| `AnnouncementFormatter` | Tests only | trimming, numbering, duplicates, blanks, exact formatting |
+| `MiniTable` | Tests only | set/clear, sums, copy overlap, snapshots, independence |
 
-### Mock task map
+Real quiz instructions may differ; verify file permissions and test restrictions in the actual specification.
 
-| Task | Required work | Production code | High-value behaviors |
-|---|---|---|---|
-| `RoomSchedule` | JUnit tests and Java repair | Repair is required/allowed | overlap versus adjacency, duplicate names, move/cancel, failure preserves state |
-| `AnnouncementFormatter` | JUnit tests | Must not be modified | trimming, numbering, duplicates, blanks, exact formatting, repeated calls |
-| `MiniTable` | JUnit tests | Must not be modified | set/clear/overwrite, sums, copy overlap, snapshots, independence |
-
-The mock describes representative tasks only. Method names, grading weights,
-file permissions, and test restrictions may differ in the real examination.
-
-### Mock-specific restrictions versus general advice
-
-| Mock-specific rule (verify again in the real exam) | General testing advice |
-|---|---|
-| Only the supplied model, including subagents | Read the specification before writing tests |
-| Preserve native OpenCode session history | Trace every test to a requirement or fault class |
-| Only ordinary JUnit 5 `@Test` methods; no parameterized, nested, or dynamic tests | Keep tests independent and deterministic |
-| No private-field, source-text, filesystem, network, or grader-internal access from tests | Assert observable public behavior and state |
-| Do not change build settings/dependencies | Use the project's existing build and conventions |
-| Preserve supplied tests and submit through the named process | Review the final diff and actual test output |
-
-Priority order:
-
-> **Specification correctness > fault detection > state verification > coverage percentage > test quantity**
 
 ## Java and JUnit 5 Cheatsheet
 
@@ -491,101 +428,14 @@ Inspect current diff/status and compare every changed path with the allowed-file
 Recheck requirements, authorized diff, permitted test results, remaining failures, and submission instructions. Preserve all OpenCode session history and report evidence, not assumptions.
 ```
 
-## OpenCode Command Reference
 
-OpenCode changes over time and examination installations may be pinned. Run
-`/help` (or open the command palette) in the actual environment before relying
-on a command. Do not update OpenCode during an exam unless instructed.
+## OpenCode Commands
 
-| Requested name | Current practical meaning | Examination-safe note |
-|---|---|---|
-| `/init` | Guided creation/update of `AGENTS.md` in documented versions | Writes a file; do not run when only task files may be modified |
-| `/models` | Lists/selects models for the current session | Confirm the authorized model; do not select another model |
-| `/compact` | Compacts/summarizes current session context | Alias may be `/summarize`; it does not authorize deleting history |
-| `/diff` | Opens the current diff viewer in current CLI docs | Ensure only authorized files changed |
-| `/mcps` | Current documented in-session MCP manager | Do not connect external services unless explicitly allowed |
-| `/mcp` | Not the current documented in-session spelling; `opencode mcp ...` is a shell CLI family | Prefer `/help`; do not configure MCP opportunistically |
-| `/agents` | Version-dependent; agents are documented via config and `opencode agent ...` | Confirm availability and model inheritance before a subagent |
-| `/skills` | Version-dependent; current docs emphasize discovery and `@skill-id` | Loading is not installation; do not write Skill files unless allowed |
-| `/review` | Often a project/custom prompt, not guaranteed built-in | If absent, request a review in plain text |
-| `/status` | Not guaranteed in the TUI; `opencode service status` reports server health | Do not confuse server health with git/task status |
+Use `/help` in the quiz environment because commands vary by version. Common references: `/models` selects the authorized model, `/diff` reviews changes, and `/sessions` lists sessions; avoid commands that alter files or session history unless permitted.
 
-Useful documented commands include `/help`, `/sessions`, and `/new`. Avoid
-`/undo` during an examination unless explicitly allowed: documented versions
-can remove recent messages and revert file changes, conflicting with preserved
-conversation history.
+## Quick Reminders
 
-### Plain-text alternative
-
-```text
-Inspect the current project diff and status. List every modified file and verify it against the specification's allowed-file list. Do not modify anything.
-```
-
-## Troubleshooting
-
-### Compilation failure
-
-1. Read the first compiler error, not only the Maven summary.
-2. Check imports, signatures, package, Java/JUnit version, and test location
-   against existing code.
-3. Do not install a missing library; use only project dependencies.
-4. Ask OpenCode for the smallest authorized correction and rerun the focused
-   compile/test command.
-
-### Test fails unexpectedly
-
-1. Re-read the exact specification clause.
-2. Minimize the scenario and inspect actual versus expected values.
-3. Check fixture leakage, order, shared static state, and repeated calls.
-4. Decide whether the expectation or implementation is wrong before editing.
-5. A production bug in a test-only task is not permission to repair it.
-
-### Maven/JaCoCo/PIT unavailable
-
-- Use only commands and plugins already supplied.
-- Do not add dependencies or edit `pom.xml` without explicit permission.
-- Report the tool/report as unavailable; continue with specification-based
-  analysis and permitted tests.
-
-### OpenCode command or Skill unavailable
-
-- Check `/help` and the installed OpenCode version.
-- Use a plain-text prompt instead of a convenience command.
-- Do not fetch/install a replacement unless explicitly allowed.
-- If a prepared Skill conflicts with the exam, follow the exam.
-
-## Common Mistakes and Final Checklist
-
-### Common failures
-
-- Editing files outside the allowed scope.
-- Repairing production code in a test-only task.
-- Using forbidden parameterized/nested/dynamic tests, private-field access,
-  filesystem/network access, or implementation introspection.
-- Writing tests that execute code but do not assert required results.
-- Repeating one fault class while missing boundaries and transitions.
-- Ignoring adjacency, duplicates, invalid ranges, repeated calls, failure-state
-  preservation, snapshots, overlap, or independence.
-- Treating 100% coverage as proof of correctness.
-- Changing correct expectations, deleting tests, or disabling tests for green.
-- Installing dependencies, Skills, plugins, or extensions; changing `pom.xml`.
-- Using a non-authorized model for a subagent or another AI interface/API.
-- Altering, deleting, fabricating, or selectively omitting session history.
-- Submitting without checking the final diff and official procedure.
-
-### Final verification checklist
-
-- [ ] Actual specification overrides this cheatsheet
-- [ ] Authorized model confirmed for main agent and subagents
-- [ ] All AI work exists in native OpenCode text sessions
-- [ ] Every requirement has a meaningful test or implementation item
-- [ ] Tests assert observable behavior and relevant post-state
-- [ ] No supplied test was weakened, deleted, or disabled
-- [ ] Exact permitted commands were run and actual results recorded
-- [ ] Diff/status contains only explicitly allowed files
-- [ ] No unauthorized dependency, configuration, or `pom.xml` change
-- [ ] Limitations and environment failures reported honestly
-- [ ] Session history preserved and official submission workflow followed
+Use existing project tools and configuration only. If a command or report is unavailable, record that limitation; never change unauthorized files or weaken tests to get a passing result.
 
 ## References
 
